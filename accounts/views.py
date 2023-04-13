@@ -5,11 +5,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
+from reviews.models import Review
 
 # Create your views here.
 @login_required
-def profile(request):
-    return render(request, 'accounts/profile.html')
+def profile(request, account_pk):
+    review = Review.objects.get(pk=account_pk)
+    context = {
+        'review': review
+    }
+    return render(request, 'accounts/profile.html', context)
 
 
 def login(request):
@@ -67,7 +72,7 @@ def update(request):
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('posts:index')
+            return redirect('reviews:index')
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {

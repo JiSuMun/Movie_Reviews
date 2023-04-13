@@ -25,7 +25,7 @@
     {{ form.as_p }}
     <input type="submit" value="회원정보수정" class="btn btn-outline-secondary d-block w-100"> 
   </form>
-  <form action="{% url 'accounts:id_delete' %}" method="POST" class="m-5 mt-0">
+  <form action="{% url 'accounts:delete' %}" method="POST" class="m-5 mt-0">
     {% csrf_token %}
     <input class="btn btn-outline-secondary d-block w-100 mb-3" type="submit" value="회원탈퇴">
     <a class="btn btn-outline-secondary d-block w-100" onclick='func()' href="{% url 'reviews:index' %}" role="button">HOME</a>
