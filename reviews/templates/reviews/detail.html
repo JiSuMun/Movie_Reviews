@@ -21,7 +21,10 @@
   .pad {
     padding-top: 5px;
   }
-  
+  .c{
+    height: 400px;
+    object-fit: cover;
+  }
 </style>
 {% endblock style %}
 
@@ -30,9 +33,9 @@
   <h1>Detail</h1>
   <p>후기 번호 - {{ review_count }}</p>
   {% if review.image %}
-    <img src="{{ review.image.url }}" alt="img">
+    <img class="c" src="{{ review.image.url }}" alt="img">
   {% else %}
-    <img src="{% static 'no-image.png' %}"  alt="no-image">
+    <img class="c" src="{% static 'no-image.png' %}"  alt="no-image">
   {% endif %}
   <p>후기 제목 : {{ review.title }}</p>
   <p>후기 내용 : {{ review.content }}</p>
@@ -60,9 +63,8 @@
           </form>
         {% endif %}
       </li>
-    {% endfor %}
-    {% empty %}
-      <p>댓글이 없어요</p>
+      {% empty %}
+        <p>댓글이 없어요</p>
     {% endfor %}
     <br>
   </ul>

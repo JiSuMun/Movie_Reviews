@@ -14,7 +14,7 @@
         <a class="navbar-brand" href="{% url 'reviews:index' %}">Reviews</a>
         <div class="d-flex">
           {% if request.user.is_authenticated %}
-            <p class="m-0 me-2 align-self-center no_wrap text-secondary">{{ user }}님</p>
+            <p class="m-0 me-2 align-self-center no_wrap text-secondary"><a href="#">{{ user }}</a></p>
             <form action="{% url 'accounts:logout' %}" method="POST">
               {% csrf_token %}
               <input class="btn btn-outline-secondary me-2" type="submit" value="Logout">

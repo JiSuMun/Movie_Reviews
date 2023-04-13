@@ -6,6 +6,10 @@
   a {
     color: grey;
   }
+  .c{
+    height: 400px;
+    object-fit: cover;
+  }
 </style>
 {% endblock style %}
 
@@ -17,11 +21,11 @@
       <div class="col-12 col-md-6 col-lg-3">
         <div class="card" style="width: 18rem;">
           {% if review.image %}
-            <div class="ratio ratio-4x3">
+            <div class="c">
               <img src="{{ review.image.url }}" class="card-img-top" alt="image">
             </div>
           {% else %}
-            <div class="ratio ratio-4x3">
+            <div class="c">
               <img src="{% static 'no-image.png' %}" class="card-img-top" alt="no-image">
             </div>
           {% endif %}
