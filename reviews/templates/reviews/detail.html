@@ -1,50 +1,81 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
+{% block style %}
+<style>
+  li {
+    list-style: none;
+  }
+
+  #id_content {
+    margin-right: 10px;
+  }
+
+  label {
+    display: inline-block;
+    vertical-align: middle;
+    padding-top: 5px;
+    margin-right: 10px;
+  }
+
+  .pad {
+    padding-top: 5px;
+  }
+  
+</style>
+{% endblock style %}
+
 {% block content %}
-<h1>Detail</h1>
-{% if review.image %}
-  <img src="{{ review.image.url }}" alt="movie_image">
-{% else %}
-  <img src="{% static 'reviews/noimage.png' %}" alt="noimage">
-{% endif %}
-  <h1>영화 후기</h1>
-  <p>작성자: {{ review.user }}</p>
-  <p>번호: {{ review.pk }}</p>
-  <p>후기 제목: {{ review.title }}</p>
-  <p>후기 내용: {{ review.content }}</p>
-  <p>영화 이름: {{ review.movie }}</p>
-{% if request.user == review.user %}
-  <form action="{% url 'reviews:delete' review.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="삭제">
-  </form>
-  <a href="{% url 'reviews:update' review.pk %}">[수정]</a>
-{% endif %}
-  <a href="{% url 'reviews:index' %}">[BACK]</a>
+<div class="container text-center">
+  <h1>Detail</h1>
+  <p>후기 번호 - {{ review_count }}</p>
+  {% if review.image %}
+    <img src="{{ review.image.url }}" alt="img">
+  {% else %}
+    <img src="{% static 'no-image.png' %}"  alt="no-image">
+  {% endif %}
+  <p>후기 제목 : {{ review.title }}</p>
+  <p>후기 내용 : {{ review.content }}</p>
+  <p>영화 이름 : {{ review.movie }}</p>
+  <div class="d-flex justify-content-center">
+    {% if request.user == review.user %}
+      <form action="{% url 'reviews:delete' review.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="DELETE" class="btn btn-outline-secondary me-2">
+      </form>
+      <a class="btn btn-outline-secondary me-2" href="{% url 'reviews:update' review.pk %}" role="button">UPDATE</a>
+    {% endif %}
+    <a class="btn btn-outline-secondary" href="{% url 'reviews:index' %}" role="button">HOME</a>
+  </div>
   <hr>
-  <form action="{% url 'reviews:comment_create' review.pk %}" method="POST">
-{% csrf_token %}
-{{ comment_form }}
-  <input type="submit" value="댓글 작성">
-  </form>
-  <hr>
-  <h4>댓글 목록</h4>
-  <p>작성된 댓글: {{ review.comment_set.count }}개</p>
   <ul>
-{% for comment in comments %}
-  <p>작성자: {{ comment.user }}</p>
-  <p>댓글 번호: {{ comment.pk }}</p>
-  <p>댓글 내용: {{ comment.content }}</p><hr>
-  {% if request.user == comment.user %}
-    <form action="{% url 'reviews:comment_delete' review.pk comment.pk %}" method="POST">
+    {% for comment in comments %}
+      <li class="d-flex justify-content-center align-self-center">
+        <p class="me-2 pad">{{ comment.user }}</p>
+        <p class="me-2 mb-0 pad">댓글 번호 - {{ forloop.counter }} / 댓글 내용 : {{ comment.content }}</p>
+        {% if request.user == comment.user %}
+          <form action="{% url 'reviews:comment_delete' review.pk comment.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-outline-secondary" value="삭제">
+          </form>
+        {% endif %}
+      </li>
+    {% endfor %}
+    {% empty %}
+      <p>댓글이 없어요</p>
+    {% endfor %}
+    <br>
+  </ul>
+  <br>
+  <div class="container">
+    <form action="{% url 'reviews:comment_create' review.pk %}" method="POST" class="d-flex justify-content-center">
       {% csrf_token %}
-      <input type="submit" value="댓글 삭제">
+      {{ comment_form }}
+      <input type="submit" value="댓글 작성">
     </form>
-  {% endif %} 
-{% empty %}
-  <p>댓글이 없어요</p>
-{% endfor %}
-</ul>
+  </div>
+</div>
 {% endblock content %}
+
+
+

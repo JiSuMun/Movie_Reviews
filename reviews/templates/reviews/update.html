@@ -1,11 +1,31 @@
 {% extends 'base.html' %}
+{% block style %}
+  <style>
+    .wid {
+      width: 500px;
+      margin: auto;
+    }
 
+    p {
+      display: grid;
+      grid-template-columns: 1fr auto;
+    }
+
+    p span {
+      grid-column: 1 / -1;
+    }
+  </style>
+{% endblock style %}
 {% block content %}
-  <h1>후기 수정</h1>
-  <form action="{% url 'reviews:update' review.pk %}" method="POST">
+
+<div class="wid p-5">
+  <form action="{% url 'reviews:update' review.pk %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="수정">
+    <input class="btn btn-outline-secondary" type="submit" value="UPDATE">
+    <a class="btn btn-outline-secondary" onclick='func()' href="{% url 'reviews:index' %}" role="button">HOME</a>
   </form>
-  <a href="{% url 'reviews:index' %}">[BACK]</a>
+</div>
+
+
 {% endblock content %}
