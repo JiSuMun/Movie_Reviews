@@ -20,5 +20,15 @@
             <button type="submit" class="btn btn-outline-secondary">회원탈퇴</button>
         </form>
     </div>
+    <h2>회원정보</h2>
+    <p>username - {{ user }}</p>
+    <p>email - {{ user.email }}</p>
+    <hr>
+    {% for review in reviews %}
+        {% comment %} {{ review_count }} {% endcomment %}
+        {{ review.content }}
+        <a href="{% url 'reviews:detail review.pk' %}">[Detail]</a>
+        <hr>
+    {% endfor %}
 </main>
 {% endblock content %}
