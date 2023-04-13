@@ -2,4 +2,30 @@
 
 {% block content %}
 <h1>index</h1>
+{% if request.user.is_authenticated %}
+  <h1>안녕하세요, {{ user }} 님!</h1>
+  <form action="{% url 'accounts:logout' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Logout">
+  </form><br>
+  <form action="{% url 'accounts:delete' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="회원탈퇴">
+  </form><hr>
+{% else %}
+  <a href="{% url 'accounts:login' %}">Login</a>
+  <a href="{% url 'accounts:signup' %}">Signup</a>
+{% endif %}
+
+  <h1>Reviews</h1>
+  <a href="{% url 'reviews:create' %}">[CREATE]</a><hr>
+
+{% for review in reviews %}
+  <p>작성자: {{ review.user }}</p>
+  <p>제목: 
+    <a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a>
+  </p>
+  <p>내용: {{ review.content }}</p>
+  <hr>
+{% endfor %}
 {% endblock content %}
