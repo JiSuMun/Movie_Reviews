@@ -1,11 +1,29 @@
 {% extends 'base.html' %}
 
+{% block style %}
+  <style>
+    p {
+      display: grid;
+      grid-template-columns: 1fr auto;
+    }
+
+    p span {
+      grid-column: 1 / -1;
+    }
+
+  </style>
+{% endblock style %}
+
 {% block content %}
-  <h1>CREATE</h1>
+<div class="mt-5 mx-auto" style="width: 500px">
   <form action="{% url 'reviews:create' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit">
+    <input class="btn btn-outline-secondary text-center" type="submit">
+    <a class="btn btn-outline-secondary text-center" onclick='func()' href="{% url 'reviews:index' %}" role="button">BACK</a>
   </form>
-  <a href="{% url 'reviews:index' %}">[BACK]</a>
+
+</div>
+
+
 {% endblock content %}

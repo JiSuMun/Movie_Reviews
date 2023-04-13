@@ -7,8 +7,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 # Create your views here.
-def index(request):
-    return render(request, 'accounts/index.html')
+@login_required
+def profile(request):
+    return render(request, 'accounts/profile.html')
+
 
 def login(request):
     if request.user.is_authenticated:
@@ -28,6 +30,7 @@ def login(request):
     return render(request, 'accounts/login.html', context)
 
 
+@login_required
 def logout(request):
     if request.user.is_authenticated:
         auth_logout(request)
@@ -52,11 +55,13 @@ def signup(request):
     return render(request, 'accounts/signup.html', context)
 
 
+@login_required
 def delete(request):
     request.user.delete()
     return redirect('reviews:index')
 
 
+@login_required
 def update(request):
     if request.method == 'POST':
         form = CustomUserChangeForm(request.POST, instance=request.user)
@@ -71,6 +76,7 @@ def update(request):
     return render(request, 'accounts/update.html', context)
 
 
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
