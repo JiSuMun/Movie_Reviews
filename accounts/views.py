@@ -10,15 +10,10 @@ from reviews.models import Review
 # Create your views here.
 @login_required
 def profile(request, account_pk):
-    # user = request.user
-    # reviews = Review.objects.filter(user=user)
     reviews = Review.objects.filter(user_id=account_pk)
-    # review_count = Review.objects.filter(pk__lte=review.pk).count()
+
     context = {
         'reviews': reviews,
-        # 'review': review,
-        # 'user': user,
-        # 'review_count': review_count,
     }
     return render(request, 'accounts/profile.html', context)
 
