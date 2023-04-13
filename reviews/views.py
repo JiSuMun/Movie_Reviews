@@ -31,12 +31,14 @@ def create(request):
 @login_required
 def detail(request, pk):
     review = Review.objects.get(pk=pk)
+    review_count = Review.objects.filter(pk__lte=review.pk).count()
     comment_form = CommentForm()
     comments = review.comment_set.all()
     context = {
         'review': review,
         'comment_form': comment_form,
         'comments': comments,
+        'review_count': review_count,
     }
     return render(request, 'reviews/detail.html', context)
 
