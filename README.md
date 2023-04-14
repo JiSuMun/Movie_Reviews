@@ -28,3 +28,7 @@
     - 홑따옴표 실수
 3. profile에서 후기번호 구현
     - {{ forloop.counter }} 이용
+4. 이미지 사이즈 수정 후 'NoneType' object has no attribute 'read' 에러 발생
+    - 업로드된 파일이 없는 경우 cleaned_data에 'image'가 없기 때문에, image 변수에 None 값이 할당되어 NoneType 객체가 되고, 이후 .read() 메소드를 호출할 때 'NoneType' object has no attribute 'read' 에러가 발생
+    - form.is_valid 전 cleaned_data에서 'image'가 있는지 검사
+    - if 'image' in request.FILES: 추가하여 해결
