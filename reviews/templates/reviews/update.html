@@ -3,23 +3,15 @@
   <style>
     .wid {
       width: 500px;
-      margin: auto;
     }
 
-    p {
-      display: grid;
-      grid-template-columns: 1fr auto;
-    }
 
-    p span {
-      grid-column: 1 / -1;
-    }
   </style>
 {% endblock style %}
 {% block content %}
 
-<div class="wid p-5">
-  <form action="{% url 'reviews:update' review.pk %}" method="POST" enctype="multipart/form-data">
+<div class="wid">
+  <form action="{% url 'reviews:update' review.pk %}" method="POST" enctype="multipart/form-data" style="width: 500px" class="mx-auto m-5 mb-3">
     {% csrf_token %}
     {{ form.as_p }}
     <input class="btn btn-outline-secondary" type="submit" value="UPDATE">
