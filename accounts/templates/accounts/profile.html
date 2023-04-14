@@ -30,7 +30,7 @@
         <hr>
         <h2>작성한 후기 목록</h2>
         {% for review in reviews %}
-            <p>후기 번호 - </p>
+            <p>후기 번호 - {{ forloop.counter }}</p>
             <p>영화 이름 - {{ review.movie }}</p>
             <a href="{% url 'reviews:detail' review.pk %}" class="btn btn-outline-secondary a" role="button">Detail</a>
             <hr>
