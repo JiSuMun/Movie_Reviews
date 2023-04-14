@@ -21,6 +21,8 @@ def create(request):
             image = form.cleaned_data.get('image')
             if image:
                 img = Image.open(BytesIO(image.read()))
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
                 img_resized = img.resize((60, 100))
                 output = BytesIO()
                 img_resized.save(output, format='JPEG')
