@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'reviews',
     'accounts',
     'django_extensions',
+    'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

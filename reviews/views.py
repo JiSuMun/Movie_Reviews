@@ -28,7 +28,7 @@ def create(request):
     return render(request, 'reviews/create.html', context)
 
 
-@login_required
+
 def detail(request, pk):
     review = Review.objects.get(pk=pk)
     review_count = Review.objects.filter(pk__lte=review.pk).count()
