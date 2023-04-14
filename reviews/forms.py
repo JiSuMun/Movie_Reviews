@@ -7,7 +7,32 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('title', 'content', 'movie', 'image',)
+    title = forms.CharField(
+        widget=forms.TextInput(
+        attrs={
+        'class' : 'form-control',
+        'style' : 'width: 250px',
+        }
+        )
+    )
 
+    content = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'style': 'width: 250px',
+            }
+        )
+    )
+
+    movie = forms.CharField(
+        widget=forms.TextInput(
+        attrs={
+        'class' : 'form-control',
+        'style' : 'width: 250px',
+        }
+        )
+    )
 
 class CommentForm(forms.ModelForm):
     class Meta:

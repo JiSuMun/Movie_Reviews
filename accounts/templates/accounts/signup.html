@@ -3,11 +3,8 @@
 {% block style %}
   <style>
     .wid {
-      margin: auto;
       width: 500px;
-      padding: 50px;
     }
-
     p {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -25,8 +22,8 @@
 {% endblock style %}
 
 {% block content %}
-<div class="wid">
-  <form action="{% url 'accounts:signup' %}" method="POST">
+<div class="wid mt-3">
+  <form action="{% url 'accounts:signup' %}" method="POST" style="width: 500px" class="mx-auto">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="회원가입" class="btn btn-outline-secondary d-block w-100 mb-3">

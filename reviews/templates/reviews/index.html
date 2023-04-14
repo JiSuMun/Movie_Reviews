@@ -32,10 +32,10 @@
           {% endif %}
           <div class="card-body">
             <h5 class="card-title">{{ review.movie }}</h5>
-            <a href="{% url 'reviews:detail' review.pk %}"><p class="card-text">{{ review.content }}</p></a>
-            <p>댓글 수: {{ review.comment_set.all|length }}</p>
-          </div>
-          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <a href="{% url 'reviews:detail' review.pk %}"><p class="card-text">{{ review.content }}</p></a>
+              <p>댓글 수: {{ review.comment_set.all|length }}</p>
+            </div>
             <p>{{ review.user }}</p>
           </div>
         </div>
