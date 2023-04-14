@@ -17,23 +17,22 @@ def index(request):
 def create(request):
     if request.method == 'POST':
         form = ReviewForm(request.POST, request.FILES)
-        if 'image' in request.FILES:
-            if form.is_valid():
-                # 변수에 사용자가 업로드한 이미지 파일 데이터를 할당
-                image = form.cleaned_data['image']
-                # 이미지 파일을 바이트 스트림으로 읽은 후, Pillow 패키지의 Image.open() 메소드로 open
+        if form.is_valid():
+            image = form.cleaned_data.get('image')
+            if image:
                 img = Image.open(BytesIO(image.read()))
-                # 이미지 크기를 60x100으로 변경
                 img_resized = img.resize((60, 100))
-                # 변수에 BytesIO 객체를 생성
                 output = BytesIO()
-                # 리사이즈된 이미지를 JPEG 포맷으로 저장
                 img_resized.save(output, format='JPEG')
-                # output 객체의 파일 포인터를 맨 앞으로 이동
                 output.seek(0)
                 review = form.save(commit=False)
                 review.user = request.user
-                review = form.save()
+                review.save()
+                return redirect('reviews:detail', review.pk)
+            else:
+                review = form.save(commit=False)
+                review.user = request.user
+                review.save()
                 return redirect('reviews:detail', review.pk)
     else:
         form = ReviewForm()
