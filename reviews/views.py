@@ -76,11 +76,16 @@ def update(request, review_pk):
             form = ReviewForm(request.POST, request.FILES, instance=review)
             if form.is_valid():
                 image = form.cleaned_data['image']
-                img = Image.open(BytesIO(image.read()))
-                img_resized = img.resize((60, 100))
-                output = BytesIO()
-                img_resized.save(output, format='JPEG')
-                output.seek(0)
+                if image:
+                    try:
+                        img = Image.open(image)
+                        img_resized = img.resize((60, 100))
+                        output = BytesIO()
+                        img_resized.save(output, format='JPEG')
+                        output.seek(0)
+                        review.image.save(f'{image.name.split(".")[0]}.jpeg', ContentFile(output.getvalue()), save=False)
+                    except OSError:
+                        pass
                 form.save()
                 return redirect('reviews:detail', review.pk)
         else:
